@@ -15,6 +15,7 @@ const init = async (app) => {
 
 	app.use('/auth', require('./auth/router'));
 	app.use('/trips', require('./trip/router'));
+	app.use('/checkin', require('./checkin/router'));
 
 	//const accessTokenVerifier = require('./auth/controllers/auth').accessTokenVerifier(true);
 

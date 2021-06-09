@@ -31,6 +31,7 @@ class Checkin extends BaseModel {
 			},
 			{
 				sequelize,
+				updatedAt: false,
 			}
 		);
 	}
