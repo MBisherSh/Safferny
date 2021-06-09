@@ -34,6 +34,8 @@ class PlaneSeat extends BaseModel {
 			},
 			{
 				sequelize,
+				updatedAt: false,
+				createdAt: false,
 			}
 		);
 	}

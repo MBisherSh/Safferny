@@ -7,5 +7,6 @@ const controller = require('./controllers/trip');
  *************************/
 
 router.get('/', catchAsync(controller.getAll));
+router.get('/:id', catchAsync(controller.getTripDetails));
 
 module.exports = router;
