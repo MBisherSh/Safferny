@@ -1,0 +1,12 @@
+port: 4001
+sequelize:
+    database: Safferny
+    username: root
+    password: password
+    host: 127.0.0.1
+    port: 3306
+    define:
+        camelCase: true
+jwt:
+    secret: f136fefdec6ecc966769a8131af7c6d23e3bca48508e2176eb736d5364c98f6d8558a192be8c4ed8625fbc1b0b70bf92bc263902f14c5950187d88272ea3a480
+    expiresIn: 1800s
