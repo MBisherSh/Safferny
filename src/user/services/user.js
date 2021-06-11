@@ -32,7 +32,6 @@ class UserService {
 	}
 
 	async save() {
-		console.log(this)
 		return User.create(this);
 	}
 

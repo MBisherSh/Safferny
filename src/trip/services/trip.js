@@ -11,16 +11,25 @@ const Plane = require('../../plane/models/plane');
 const _ = require('lodash');
 
 class TripService {
-	static async getAvailableTrips(where) {
+	static async getAvailableTrips(filter) {
+		let toWhere, fromWhere;
+		if (filter.to) {
+			toWhere = { name: { [Op.like]: filter.to + '%' } };
+		}
+		if (filter.from) {
+			fromWhere = { name: { [Op.like]: filter.from + '%' } };
+		}
+
 		return await Trip.findAll({
-			where,
 			include: [
 				{
 					model: sequelize.model('Plane'),
+					required: true,
 					attributes: ['name', 'id'],
 					include: [
 						{
 							model: sequelize.model('Company'),
+							required: true,
 							attributes: ['name'],
 						},
 					],
@@ -28,25 +37,31 @@ class TripService {
 
 				{
 					model: sequelize.model('Airport'),
+					required: true,
 					as: 'landingAirport',
 					attributes: ['name'],
 					foreignKey: 'landingId',
 					include: [
 						{
 							model: sequelize.model('City'),
+							required: true,
 							attributes: ['name'],
+							where: toWhere,
 						},
 					],
 				},
 				{
 					model: sequelize.model('Airport'),
+					required: true,
 					as: 'takingOffAirport',
 					attributes: ['name'],
 					foreignKey: 'takingOffId',
 					include: [
 						{
 							model: sequelize.model('City'),
+							required: true,
 							attributes: ['name'],
+							where: fromWhere,
 						},
 					],
 				},
@@ -107,12 +122,12 @@ class TripService {
 			group: ['planeSeatId'],
 		});
 		for (const seat of allSeats) {
-			let takenCount = 0,availableCount = seat.count;
+			let takenCount = 0,
+				availableCount = seat.count;
 			for (const takenSeat of takenSeats) {
-
 				if (seat.id === takenSeat.planeSeatId) {
 					availableCount -= takenSeat.dataValues.takenSum;
-					break
+					break;
 				}
 			}
 			availableSeats.push({ seat, availableCount });
