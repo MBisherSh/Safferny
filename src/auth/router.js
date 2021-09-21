@@ -9,5 +9,4 @@ const validator = require('./validators/auth');
 
 router.post('/signup', catchAsync(controller.signUp));
 router.post('/login',  catchAsync(controller.login));
-
 module.exports = router;
